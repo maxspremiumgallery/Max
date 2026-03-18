@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Max's Premium Gallery — Exclusive premium content on Telegram. Subscribe for full access to curated photos, videos, and media."/>
+  <meta property="og:title" content="Max's Premium Gallery"/>
+  <meta property="og:description" content="Exclusive premium content on Telegram. Subscribe for full access."/>
+  <meta property="og:type" content="website"/>
+  <title>Max's Premium Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --deep: #07010F;
+      --dark: #120528;
+      --mid: #1E0B42;
+      --purple: #7C3AED;
+      --violet: #9B5DE5;
+      --lavender: #C084FC;
+      --pale: #E9D5FF;
+      --white: #FFFFFF;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--deep);
+      color: var(--white);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    /* ── STARS BG ── */
+    .stars {
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(1px 1px at 20% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 8%,  rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 22%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 10% 40%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 45% 55%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 50%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 90%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 90%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(2px 2px at 55% 30%, rgba(200,150,255,0.4) 0%, transparent 100%),
+        radial-gradient(2px 2px at 25% 65%, rgba(200,150,255,0.3) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    /* ── GLOW ORBS ── */
+    .orb {
+      position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0;
+    }
+    .orb-1 { width: 500px; height: 500px; top: -150px; left: -150px; background: radial-gradient(circle, rgba(124,58,237,0.25) 0%, transparent 70%); }
+    .orb-2 { width: 400px; height: 400px; bottom: -100px; right: -100px; background: radial-gradient(circle, rgba(155,93,229,0.2) 0%, transparent 70%); }
+    .orb-3 { width: 300px; height: 300px; top: 50%; left: 50%; transform: translate(-50%,-50%); background: radial-gradient(circle, rgba(192,132,252,0.1) 0%, transparent 70%); }
+
+    /* ── LAYOUT ── */
+    .container { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 20px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(7,1,15,0.9), transparent);
+      backdrop-filter: blur(2px);
+    }
+    .nav-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; letter-spacing: 0.15em; color: var(--pale); font-weight: 400; text-decoration: none; }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a { color: rgba(255,255,255,0.55); font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--lavender); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 120px 24px 80px;
+    }
+    .logo-wrap {
+      width: 140px; height: 140px; margin: 0 auto 40px;
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    .hero-eyebrow {
+      font-size: 0.72rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--lavender); margin-bottom: 16px;
+      animation: fadeUp 0.8s ease both 0.2s;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 300; line-height: 1.1;
+      color: var(--white); margin-bottom: 8px;
+      animation: fadeUp 0.8s ease both 0.4s;
+    }
+    .hero-title span { color: var(--lavender); font-style: italic; }
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 3vw, 1.6rem);
+      color: rgba(200,160,255,0.7); font-weight: 300; letter-spacing: 0.08em;
+      margin-bottom: 40px;
+      animation: fadeUp 0.8s ease both 0.6s;
+    }
+    .hero-desc {
+      max-width: 520px; line-height: 1.8; color: rgba(255,255,255,0.5);
+      font-size: 0.95rem; margin: 0 auto 52px;
+      animation: fadeUp 0.8s ease both 0.8s;
+    }
+    .cta-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; animation: fadeUp 0.8s ease both 1s; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 32px; border-radius: 4px; font-family: 'Jost', sans-serif;
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.25s; cursor: pointer; border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--purple), var(--violet));
+      color: white; box-shadow: 0 0 30px rgba(124,58,237,0.4);
+    }
+    .btn-primary:hover { box-shadow: 0 0 50px rgba(124,58,237,0.7); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: var(--pale);
+      border: 1px solid rgba(192,132,252,0.35);
+    }
+    .btn-outline:hover { border-color: var(--lavender); background: rgba(124,58,237,0.1); }
+
+    /* ── DIVIDER ── */
+    .divider { width: 60px; height: 1px; background: linear-gradient(to right, transparent, var(--purple), transparent); margin: 0 auto; }
+
+    /* ── FEATURES ── */
+    .features { padding: 100px 0; }
+    .section-label { font-size: 0.7rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--lavender); text-align: center; margin-bottom: 16px; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); text-align: center; font-weight: 300; color: var(--white); margin-bottom: 60px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+    .card {
+      background: linear-gradient(135deg, rgba(30,11,66,0.8), rgba(18,5,40,0.9));
+      border: 1px solid rgba(124,58,237,0.2); border-radius: 8px;
+      padding: 36px 28px; transition: all 0.3s;
+    }
+    .card:hover { border-color: rgba(192,132,252,0.5); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+    .card-icon { font-size: 2rem; margin-bottom: 16px; }
+    .card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: var(--pale); margin-bottom: 10px; font-weight: 600; }
+    .card-text { font-size: 0.88rem; color: rgba(255,255,255,0.45); line-height: 1.7; }
+
+    /* ── PLANS ── */
+    .plans { padding: 80px 0 100px; }
+    .plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-top: 20px; }
+    .plan-card {
+      border: 1px solid rgba(124,58,237,0.25); border-radius: 8px; padding: 28px 20px;
+      text-align: center; transition: all 0.3s; position: relative;
+      background: rgba(18,5,40,0.6);
+    }
+    .plan-card.featured { border-color: var(--purple); box-shadow: 0 0 30px rgba(124,58,237,0.2); }
+    .plan-card.featured::before { content: 'POPULAR'; position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: var(--purple); font-size: 0.6rem; letter-spacing: 0.2em; padding: 3px 12px; border-radius: 20px; color: white; }
+    .plan-card:hover { border-color: var(--lavender); transform: translateY(-3px); }
+    .plan-name { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--lavender); margin-bottom: 12px; }
+    .plan-stars { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: white; font-weight: 600; }
+    .plan-stars span { font-size: 0.9rem; color: var(--lavender); }
+    .plan-period { font-size: 0.78rem; color: rgba(255,255,255,0.35); margin-top: 6px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(124,58,237,0.15); padding: 48px 24px;
+      text-align: center;
+    }
+    .footer-links { display: flex; justify-content: center; gap: 32px; margin-bottom: 24px; flex-wrap: wrap; }
+    .footer-links a { color: rgba(255,255,255,0.35); font-size: 0.78rem; letter-spacing: 0.1em; text-decoration: none; transition: color 0.2s; text-transform: uppercase; }
+    .footer-links a:hover { color: var(--lavender); }
+    .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.2); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <nav>
+    <a class="nav-brand" href="index.html">MPG</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#plans">Plans</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="logo-wrap">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="140" height="140">
+        <defs>
+          <radialGradient id="bg" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#3D1A6E"/><stop offset="100%" stop-color="#0D0520"/></radialGradient>
+          <linearGradient id="crown" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="50%" stop-color="#D4A8FF"/><stop offset="100%" stop-color="#9B5DE5"/></linearGradient>
+          <filter id="s"><feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="#9B5DE5" flood-opacity="0.9"/></filter>
+        </defs>
+        <rect width="512" height="512" rx="80" fill="url(#bg)"/>
+        <circle cx="256" cy="210" r="120" fill="rgba(155,93,229,0.15)"/>
+        <g filter="url(#s)">
+          <rect x="152" y="270" width="208" height="36" rx="8" fill="url(#crown)"/>
+          <polygon points="152,270 152,180 196,230 256,155 316,230 360,180 360,270" fill="url(#crown)"/>
+          <circle cx="256" cy="168" r="12" fill="#FF6EFF" opacity="0.95"/>
+          <circle cx="176" cy="222" r="8" fill="#D4A8FF" opacity="0.9"/>
+          <circle cx="336" cy="222" r="8" fill="#D4A8FF" opacity="0.9"/>
+        </g>
+        <text x="256" y="355" font-family="Georgia,serif" font-size="38" font-weight="700" fill="#E9D5FF" text-anchor="middle" letter-spacing="8">MAX'S</text>
+        <text x="256" y="400" font-family="Georgia,serif" font-size="28" fill="#C084FC" text-anchor="middle" letter-spacing="10">PREMIUM</text>
+        <text x="256" y="435" font-family="Georgia,serif" font-size="24" fill="white" text-anchor="middle" letter-spacing="12" opacity="0.8">GALLERY</text>
+      </svg>
+    </div>
+    <p class="hero-eyebrow">Exclusive Content Subscription</p>
+    <h1 class="hero-title">Max's <span>Premium</span> Gallery</h1>
+    <p class="hero-sub">Curated. Exclusive. Yours.</p>
+    <p class="hero-desc">Join thousands of subscribers with access to Max's premium collection of photos, videos, and exclusive media — delivered directly to your Telegram.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://t.me/MaxPremiumFilesBot">⭐ Subscribe Now</a>
+      <a class="btn btn-outline" href="https://t.me/MaxFreebies">🎁 Free Preview</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="features" id="about">
+    <div class="container">
+      <p class="section-label">Why Subscribe</p>
+      <h2 class="section-title">Everything in one place</h2>
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">👑</div>
+          <div class="card-title">Premium Content</div>
+          <div class="card-text">Exclusive photos, videos, and media curated by Max. New content posted regularly — subscribers get everything first.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">Instant Access</div>
+          <div class="card-text">Pay with Telegram Stars and get access immediately. No waiting, no approvals — fully automated.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔒</div>
+          <div class="card-title">Private & Secure</div>
+          <div class="card-text">Your privacy is our priority. We only collect what's necessary to manage your subscription. Full details in our Privacy Policy.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">💎</div>
+          <div class="card-title">Flexible Plans</div>
+          <div class="card-text">Monthly, 6-month, yearly, or lifetime plans. Pay with Telegram Stars, crypto, or Buy Me a Coffee.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANS -->
+  <section class="plans" id="plans">
+    <div class="container">
+      <p class="section-label">Pricing</p>
+      <h2 class="section-title">Choose your plan</h2>
+      <div class="plan-grid">
+        <div class="plan-card">
+          <div class="plan-name">Monthly</div>
+          <div class="plan-stars">250 <span>⭐</span></div>
+          <div class="plan-period">30 days</div>
+        </div>
+        <div class="plan-card featured">
+          <div class="plan-name">6 Months</div>
+          <div class="plan-stars">1,200 <span>⭐</span></div>
+          <div class="plan-period">180 days</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-name">Yearly</div>
+          <div class="plan-stars">2,400 <span>⭐</span></div>
+          <div class="plan-period">365 days</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-name">Lifetime</div>
+          <div class="plan-stars">4,000 <span>⭐</span></div>
+          <div class="plan-period">Forever</div>
+        </div>
+      </div>
+      <p style="text-align:center; margin-top:32px; font-size:0.82rem; color:rgba(255,255,255,0.3);">Also accepting Crypto (USDT) and Buy Me a Coffee. Contact us for details.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="divider" style="margin-bottom:40px;"></div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms &amp; Conditions</a>
+      <a href="https://t.me/MaxPremiumFilesBot">Telegram Bot</a>
+      <a href="/cdn-cgi/l/email-protection#3459554c47444651595d41595355585851464d745359555d581a575b59">Contact</a>
+    </div>
+    <p class="footer-copy">© 2026 Max's Premium Gallery. Al
